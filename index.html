@@ -1,0 +1,302 @@
+<title>Beyzanur'un 10 Kasım'da Yapacağı İşler</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap">
+<style>
+  /* Layout: koyu şarap renkli bir başlık bandı, altında tek sütun halinde tikli liste satırları */
+  :root {
+    --bg: #F2E4D0;
+    --surface: #FCF6EB;
+    --ink: #3A271D;
+    --muted: #86705F;
+    --line: #E4D2BA;
+    --accent: #C2622F;
+    --on-accent: #FFF6EA;
+    --head-bg: #B05630;
+    --head-ink: #FFF3E2;
+    --head-muted: #F8DEC6;
+    --gold: #FFD58A;
+    --ok: #5E7A3A;
+    --bad: #B23A2E;
+    --blank: #A68D76;
+    --font-display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    padding-block: 28px 48px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .sheet { max-width: 640px; margin: 0 auto; }
+
+  /* Başlık bandı */
+  .head {
+    background: var(--head-bg);
+    color: var(--head-ink);
+    border-radius: 6px 6px 0 0;
+    padding: 28px 26px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .head::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 240, 215, .22) 50%, transparent 65%);
+    transform: translateX(-120%);
+    animation: sweep 2.4s .5s ease-out 1 forwards;
+    pointer-events: none;
+  }
+  .eyebrow {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 6.4vw, 2.7rem);
+    line-height: 1.08;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+  }
+  .progress-row {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 18px;
+  }
+  .progress { flex: 1 1 220px; min-width: 0; }
+  .progress-label {
+    font-size: 13px;
+    color: var(--head-muted);
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  .progress-label b { color: var(--head-ink); font-weight: 600; }
+  .segments { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+  .segments i {
+    display: block;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--gold);
+    transform-origin: left center;
+    animation: fill .5s calc(.2s + var(--i) * 70ms) cubic-bezier(.2, .8, .3, 1) both;
+  }
+  .stamp {
+    flex: 0 0 auto;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: .16em;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    padding: 4px 10px 3px;
+    transform: rotate(-6deg);
+    animation: stamp .45s 1.1s cubic-bezier(.3, 1.5, .5, 1) both;
+  }
+
+  /* Liste */
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+  }
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 22px;
+    border-top: 1px solid var(--line);
+    transition: transform .2s ease, background-color .2s ease;
+    animation: rise .5s calc(.1s + var(--i) * 60ms) ease-out both;
+  }
+  .row:first-child { border-top: 0; }
+  .tick {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: grid;
+    place-items: center;
+    transition: transform .25s cubic-bezier(.3, 1.6, .5, 1);
+  }
+  .tick svg { width: 16px; height: 16px; display: block; }
+  .tick path {
+    fill: none;
+    stroke: var(--on-accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: draw .45s calc(.35s + var(--i) * 80ms) ease-out both;
+  }
+  .body { flex: 1 1 auto; min-width: 0; }
+  .name {
+    display: block;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 28px;
+    overflow-wrap: anywhere;
+  }
+  .row-math .name { font-weight: 600; }
+  .note { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+
+  /* Matematik sonuçları */
+  .stats { margin-top: 10px; }
+  .stat-list { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0; padding: 0; list-style: none; }
+  .stat-list li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-list b { font-size: 15px; font-weight: 600; }
+  .stat-list .ok b { color: var(--ok); }
+  .stat-list .bad b { color: var(--bad); }
+  .stat-list .blank b { color: var(--blank); }
+  .bar {
+    display: flex;
+    height: 6px;
+    margin-top: 10px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--line);
+  }
+  .bar span {
+    display: block;
+    transform-origin: left center;
+    animation: grow .8s .9s cubic-bezier(.2, .8, .3, 1) both;
+  }
+  .bar .ok { background: var(--ok); width: 76%; }
+  .bar .bad { background: var(--bad); width: 8%; }
+  .bar .blank { background: var(--blank); width: 16%; }
+
+  .foot {
+    margin: 18px 4px 0;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (hover: hover) {
+    .row:hover { transform: translateX(5px); background: color-mix(in srgb, var(--accent) 7%, transparent); }
+    .row:hover .tick { transform: rotate(-12deg) scale(1.12); }
+  }
+
+  @media (max-width: 420px) {
+    .head { padding: 24px 18px 20px; }
+    .row { padding: 14px 16px; gap: 14px; }
+    .name { font-size: 16px; }
+  }
+
+  @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes rise { from { transform: translateY(8px); opacity: .4; } to { transform: none; opacity: 1; } }
+  @keyframes stamp { from { transform: rotate(-6deg) scale(1.7); opacity: 0; } to { transform: rotate(-6deg) scale(1); opacity: 1; } }
+  @keyframes sweep { to { transform: translateX(120%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<main class="sheet">
+  <header class="head">
+    <p class="eyebrow">Salı · 10 Kasım 2026</p>
+    <h1>Beyzanur'un 10 Kasım'da Yapacağı İşler</h1>
+    <div class="progress-row">
+      <div class="progress">
+        <div class="progress-label"><b>10 / 10</b> iş tamamlandı</div>
+        <div class="segments" aria-hidden="true">
+          <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i>
+          <i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i>
+        </div>
+      </div>
+      <div class="stamp" aria-hidden="true">TAMAM</div>
+    </div>
+  </header>
+
+  <ul class="list">
+    <li class="row" style="--i:0">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">İkindi namazı</span></div>
+    </li>
+    <li class="row" style="--i:1">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Akşam namazı</span></div>
+    </li>
+    <li class="row" style="--i:2">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Mutfak toplama</span></div>
+    </li>
+    <li class="row" style="--i:3">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Salon toplama</span></div>
+    </li>
+    <li class="row" style="--i:4">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Yatak odası toplama</span></div>
+    </li>
+    <li class="row" style="--i:5">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Çalışma odası toplama</span></div>
+    </li>
+    <li class="row" style="--i:6">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Yarına olan ödevler</span></div>
+    </li>
+    <li class="row row-math" style="--i:7">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body">
+        <span class="name">50 adet matematik olimpiyat sorusu çözme</span>
+        <div class="stats">
+          <ul class="stat-list">
+            <li class="ok"><b>38</b> doğru</li>
+            <li class="bad"><b>4</b> yanlış</li>
+            <li class="blank"><b>8</b> boş</li>
+          </ul>
+          <div class="bar" role="img" aria-label="50 sorunun 38'i doğru, 4'ü yanlış, 8'i boş">
+            <span class="ok"></span><span class="bad"></span><span class="blank"></span>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="row" style="--i:8">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Banyo</span></div>
+    </li>
+    <li class="row" style="--i:9">
+      <span class="tick" role="img" aria-label="Tamamlandı"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <div class="body"><span class="name">Okul çantası hazırlama</span></div>
+    </li>
+  </ul>
+
+  <p class="foot">Bugünün listesi kapandı.</p>
+</main>
